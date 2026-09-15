@@ -134,6 +134,7 @@ export default function App() {
   // Supabase Database Connection Status State
   const [supabaseLoading, setSupabaseLoading] = useState<boolean>(isSupabaseConfigured);
   const [supabaseError, setSupabaseError] = useState<string | null>(null);
+  const [isTableMissing, setIsTableMissing] = useState<boolean>(false);
 
   // Load and subscribe from Supabase if configured
   useEffect(() => {
@@ -150,7 +151,15 @@ export default function App() {
           .order('id');
 
         if (error) {
-          throw error;
+          if (error.code === 'PGRST125' || (error.message && error.message.includes('Invalid path'))) {
+            setIsTableMissing(true);
+            setSupabaseError("The 'products' table does not exist in your Supabase schema yet. Please run the SQL setup script.");
+            showNotification("Database setup required. Operating safely in LocalStorage mode.", "info");
+          } else {
+            setSupabaseError(error.message || String(error));
+            showNotification("Supabase connection failed.", "error");
+          }
+          return;
         }
 
         if (data && data.length > 0) {
@@ -163,16 +172,18 @@ export default function App() {
             .upsert(INITIAL_PRODUCTS);
 
           if (seedError) {
-            console.error("Seeding error", seedError);
+            if (seedError.code === 'PGRST125' || (seedError.message && seedError.message.includes('Invalid path'))) {
+              setIsTableMissing(true);
+              setSupabaseError("The 'products' table does not exist in your Supabase schema yet.");
+            }
           } else {
             setProducts(INITIAL_PRODUCTS);
             showNotification("Supabase seeded with bedding presets!", "success");
           }
         }
       } catch (err: any) {
-        console.error("Supabase integration error", err);
-        setSupabaseError(err.message || String(err));
-        showNotification("Supabase sync offline. Using local storage.", "error");
+        // Standard recovery info log rather than console.error
+        console.info("Supabase sync temporarily bypassed: operating in LocalStorage mode.");
       } finally {
         setSupabaseLoading(false);
       }
@@ -210,7 +221,7 @@ export default function App() {
 
   // Synchronise state changes to Supabase when updated by admin
   useEffect(() => {
-    if (!isSupabaseConfigured || supabaseLoading) return;
+    if (!isSupabaseConfigured || supabaseLoading || isTableMissing) return;
 
     const syncToSupabase = async () => {
       try {
@@ -218,16 +229,21 @@ export default function App() {
           .from('products')
           .upsert(products);
         if (error) {
-          console.error("Supabase sync error:", error);
+          if (error.code === 'PGRST125' || (error.message && error.message.includes('Invalid path'))) {
+            setIsTableMissing(true);
+            setSupabaseError("The 'products' table does not exist in your Supabase schema yet.");
+          } else {
+            console.info("Supabase sync issue:", error.message);
+          }
         }
       } catch (err) {
-        console.error("Failed to sync to Supabase:", err);
+        console.info("Supabase sync bypassed.");
       }
     };
 
     const timeout = setTimeout(syncToSupabase, 500);
     return () => clearTimeout(timeout);
-  }, [products, supabaseLoading]);
+  }, [products, supabaseLoading, isTableMissing]);
 
   // Admin lock states
   const [adminPassword, setAdminPassword] = useState<string>('');
@@ -976,6 +992,47 @@ export default function App() {
                   </button>
                 </div>
               </div>
+
+              {/* Supabase Missing Table Setup Instructions */}
+              {isTableMissing && (
+                <div className="bg-amber-50 border border-amber-200 p-6 rounded-2xl space-y-3.5 animate-fade-in text-slate-800 shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 animate-bounce" />
+                    <span className="font-semibold text-sm text-amber-800">Supabase Table Missing ('products')</span>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Your Supabase client is successfully initialized, but the database table <code className="bg-amber-100/80 px-1.5 py-0.5 rounded font-mono text-amber-800 font-semibold">products</code> was not found in your Supabase schema (Error <code className="font-mono bg-amber-100/80 px-1 py-0.5 rounded text-amber-800 font-semibold text-[10px]">PGRST125</code>).
+                    The app is currently falling back to LocalStorage to keep your session working. Please execute the following SQL script in your <strong>Supabase SQL Editor</strong> to create the table and enable real-time replication:
+                  </p>
+                  
+                  <div className="relative group">
+                    <pre className="bg-slate-900 text-slate-100 p-4 rounded-xl font-mono text-[10px] sm:text-xs overflow-x-auto max-h-56 leading-normal shadow-inner select-all">
+{`-- 1. Create the master bedding catalogue table
+create table products (
+  id text primary key,
+  name text not null,
+  category text not null,
+  description text,
+  "imageUrl" text,
+  colors jsonb,
+  variants jsonb,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- 2. Enable Realtime database replication for live client updates
+alter publish supabase_realtime add table products;
+
+-- 3. Disable RLS or configure active public policies for anonymous access
+alter table products disable row level security;`}
+                    </pre>
+                  </div>
+                  
+                  <div className="text-[10px] text-slate-500 flex items-center gap-1">
+                    <Info className="w-3.5 h-3.5 text-slate-400" />
+                    <span><strong>Steps:</strong> Click on "SQL Editor" in your Supabase sidebar, paste this script, click "Run", and then simply reload this tab!</span>
+                  </div>
+                </div>
+              )}
 
               {/* Corporate Database Statistics Overview */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
