@@ -225,23 +225,38 @@ export default function App() {
 
     const syncToSupabase = async () => {
       try {
+        // Full payload mapping to guarantee correct database column structures
+        const payload = products.map(p => ({
+          id: p.id,
+          name: p.name,
+          category: p.category,
+          description: p.description,
+          imageUrl: p.imageUrl,
+          colors: p.colors,
+          variants: p.variants
+        }));
+
         const { error } = await supabase
           .from('products')
-          .upsert(products);
+          .upsert(payload);
+
         if (error) {
+          console.error("Supabase API write failed:", error);
           if (error.code === 'PGRST125' || (error.message && error.message.includes('Invalid path'))) {
             setIsTableMissing(true);
             setSupabaseError("The 'products' table does not exist in your Supabase schema yet.");
-          } else {
-            console.info("Supabase sync issue:", error.message);
           }
+          showNotification("Failed to save to Cloud. Saved to LocalStorage.", "error");
+        } else {
+          showNotification("Saved to Supabase successfully!", "success");
         }
-      } catch (err) {
-        console.info("Supabase sync bypassed.");
+      } catch (err: any) {
+        console.error("Supabase API write Exception:", err);
+        showNotification("Failed to save to Cloud. Saved to LocalStorage.", "error");
       }
     };
 
-    const timeout = setTimeout(syncToSupabase, 500);
+    const timeout = setTimeout(syncToSupabase, 1000);
     return () => clearTimeout(timeout);
   }, [products, supabaseLoading, isTableMissing]);
 
@@ -549,10 +564,14 @@ export default function App() {
             .eq('id', productId);
           
           if (error) {
-            console.error("Supabase delete error:", error);
+            console.error("Supabase API write failed (delete):", error);
+            showNotification("Failed to save to Cloud. Saved to LocalStorage.", "error");
+          } else {
+            showNotification("Saved to Supabase successfully!", "success");
           }
         } catch (err) {
-          console.error("Failed to delete from Supabase:", err);
+          console.error("Supabase API write Exception (delete):", err);
+          showNotification("Failed to save to Cloud. Saved to LocalStorage.", "error");
         }
       }
     }
@@ -577,12 +596,29 @@ export default function App() {
             .neq('id', 'placeholder_nonexistent_id');
 
           if (!deleteError) {
-            await supabase.from('products').upsert(INITIAL_PRODUCTS);
+            const payload = INITIAL_PRODUCTS.map(p => ({
+              id: p.id,
+              name: p.name,
+              category: p.category,
+              description: p.description,
+              imageUrl: p.imageUrl,
+              colors: p.colors,
+              variants: p.variants
+            }));
+            const { error: upsertError } = await supabase.from('products').upsert(payload);
+            if (upsertError) {
+              console.error("Supabase API write failed (reset upsert):", upsertError);
+              showNotification("Failed to save to Cloud. Saved to LocalStorage.", "error");
+            } else {
+              showNotification("Saved to Supabase successfully!", "success");
+            }
           } else {
             console.error("Supabase reset delete error:", deleteError);
+            showNotification("Failed to save to Cloud. Saved to LocalStorage.", "error");
           }
         } catch (err) {
           console.error("Failed to reset Supabase catalog:", err);
+          showNotification("Failed to save to Cloud. Saved to LocalStorage.", "error");
         }
       }
     }
