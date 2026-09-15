@@ -711,7 +711,7 @@ export default function App() {
                   />
                   
                   {/* Category Tag */}
-                  <span className="absolute top-4 left-4 text-[9px] font-bold text-emerald-800 bg-white/95 border border-emerald-100 px-2.5 py-1 rounded-full uppercase tracking-widest shadow-sm">
+                  <span className="absolute top-4 left-4 text-xs font-bold text-emerald-800 bg-white/95 border border-emerald-100 px-3 py-1.5 rounded-full uppercase tracking-widest shadow-sm">
                     {product.category}
                   </span>
                 </div>
@@ -719,18 +719,18 @@ export default function App() {
                 {/* Card Info (Simplified outer layout) */}
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div className="space-y-2">
-                    <h3 className="font-serif-brand text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
+                    <h3 className="font-serif-brand text-xl sm:text-2xl font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
                       {product.name}
                     </h3>
-                    <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    <p className="text-sm text-slate-500 line-clamp-2 leading-relaxed font-semibold">
                       {product.description}
                     </p>
                   </div>
 
                   <div className="pt-2 border-t border-slate-100">
-                    <div className="w-full py-2 bg-slate-50 group-hover:bg-emerald-50 text-slate-700 group-hover:text-emerald-800 text-xs font-semibold rounded-lg text-center flex items-center justify-center gap-1 transition-all border border-slate-200/50 group-hover:border-emerald-200/50">
+                    <div className="w-full py-2.5 bg-slate-50 group-hover:bg-emerald-50 text-slate-700 group-hover:text-emerald-800 text-sm font-bold rounded-lg text-center flex items-center justify-center gap-1 transition-all border border-slate-200/50 group-hover:border-emerald-200/50">
                       <span>View Details &amp; Pricing</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
+                      <ChevronRight className="w-4 h-4" />
                     </div>
                   </div>
                 </div>
@@ -772,7 +772,7 @@ export default function App() {
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
-              <span className="absolute bottom-4 left-4 text-[9px] font-bold text-emerald-800 bg-white/95 border border-emerald-100 px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">
+              <span className="absolute bottom-4 left-4 text-xs font-bold text-emerald-800 bg-white/95 border border-emerald-100 px-3.5 py-1.5 rounded-full uppercase tracking-widest shadow-sm">
                 {selectedDetailProduct.category}
               </span>
             </div>
@@ -783,31 +783,31 @@ export default function App() {
               <div className="space-y-4">
                 {/* Title and Category */}
                 <div>
-                  <span className="text-[10px] uppercase tracking-widest text-emerald-700 font-bold">Bedding Catalog Line</span>
-                  <h3 className="font-serif-brand text-2xl font-bold text-slate-900 mt-0.5">
+                  <span className="text-xs uppercase tracking-widest text-emerald-700 font-bold">Bedding Catalog Line</span>
+                  <h3 className="font-serif-brand text-2xl sm:text-3xl font-bold text-slate-900 mt-0.5">
                     {selectedDetailProduct.name}
                   </h3>
                 </div>
 
                 {/* Description */}
                 <div className="space-y-1">
-                  <span className="block text-[9px] uppercase tracking-wider text-slate-400 font-bold">Contract Specifications</span>
-                  <p className="text-xs text-slate-500 leading-relaxed">
+                  <span className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Contract Specifications</span>
+                  <p className="text-sm text-slate-500 leading-relaxed font-semibold">
                     {selectedDetailProduct.description}
                   </p>
                 </div>
 
                 {/* Colors Displayed Cleanly as Swatches */}
                 <div className="space-y-2">
-                  <span className="block text-[9px] uppercase tracking-wider text-slate-400 font-bold">Available Colors &amp; Swatches</span>
+                  <span className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Available Colors &amp; Swatches</span>
                   <div className="flex flex-wrap gap-2">
                     {selectedDetailProduct.colors.length === 0 ? (
-                      <span className="text-xs text-slate-400 italic">No color swatches enabled.</span>
+                      <span className="text-sm text-slate-400 italic">No color swatches enabled.</span>
                     ) : (
                       selectedDetailProduct.colors.map((color) => (
                         <div 
                           key={color.name}
-                          className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-slate-50 border border-slate-200 rounded-full text-xs text-slate-700 font-medium"
+                          className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-slate-50 border border-slate-200 rounded-full text-sm text-slate-700 font-bold"
                         >
                           <span 
                             className="w-3 h-3 rounded-full border border-slate-300"
@@ -822,10 +822,10 @@ export default function App() {
 
                 {/* Sizing Matrix & Pricing Table */}
                 <div className="space-y-2">
-                  <span className="block text-[9px] uppercase tracking-wider text-slate-400 font-bold">Wholesale Sizing Matrix</span>
+                  <span className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Wholesale Sizing Matrix</span>
                   
                   <div className="border border-slate-100 rounded-xl overflow-hidden">
-                    <div className="bg-slate-50 px-3 py-1.5 grid grid-cols-12 text-[10px] font-bold uppercase text-slate-500 tracking-wider">
+                    <div className="bg-slate-50 px-3 py-2.5 grid grid-cols-12 text-xs font-bold uppercase text-slate-500 tracking-wider">
                       <span className="col-span-6">Size</span>
                       <span className="col-span-3 text-center">Status</span>
                       <span className="col-span-3 text-right">Wholesale Rate</span>
@@ -833,36 +833,36 @@ export default function App() {
 
                     <div className="divide-y divide-slate-100 max-h-48 overflow-y-auto">
                       {selectedDetailProduct.variants.length === 0 ? (
-                        <div className="p-3 text-xs text-slate-400 italic text-center">No active sizes configured.</div>
+                        <div className="p-3 text-sm text-slate-400 italic text-center">No active sizes configured.</div>
                       ) : (
                         selectedDetailProduct.variants.map((v) => {
                           const isOutOfStock = v.stock === 0;
                           return (
                             <div 
                               key={v.id}
-                              className="px-3 py-2 grid grid-cols-12 items-center text-xs"
+                              className="px-3 py-3 grid grid-cols-12 items-center text-sm font-bold"
                             >
-                              <span className={`col-span-6 font-medium ${isOutOfStock ? 'text-slate-400 line-through' : 'text-slate-800'}`}>
+                              <span className={`col-span-6 font-bold ${isOutOfStock ? 'text-slate-400 line-through' : 'text-slate-800'}`}>
                                 {v.size}
                               </span>
                               
                               <div className="col-span-3 text-center">
                                 {isOutOfStock ? (
-                                  <span className="inline-block text-[8px] text-red-700 bg-red-50 border border-red-200 px-1.5 py-0.5 rounded uppercase font-semibold">
+                                  <span className="inline-block text-[10px] text-red-700 bg-red-50 border border-red-200 px-2 py-0.5 rounded uppercase font-bold">
                                     Out of Stock
                                   </span>
                                 ) : v.stock < 10 ? (
-                                  <span className="inline-block text-[8px] text-amber-700 bg-amber-50 border border-amber-200 px-1.5 py-0.5 rounded uppercase font-semibold">
+                                  <span className="inline-block text-[10px] text-amber-700 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded uppercase font-bold">
                                     Low Stock
                                   </span>
                                 ) : (
-                                  <span className="inline-block text-[8px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-1.5 py-0.5 rounded uppercase font-semibold">
+                                  <span className="inline-block text-[10px] text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded uppercase font-bold">
                                     In Stock
                                   </span>
                                 )}
                               </div>
 
-                              <span className="col-span-3 text-right font-mono font-bold text-emerald-800">
+                              <span className="col-span-3 text-right font-mono font-bold text-emerald-800 text-base sm:text-lg">
                                 £{v.price.toFixed(2)}
                               </span>
                             </div>
@@ -1116,21 +1116,21 @@ alter table products disable row level security;`}
                         
                         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3">
                           <div className="space-y-1">
-                            <label className="block text-[9px] uppercase tracking-wider text-slate-400 font-bold">Line Title</label>
+                            <label className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Line Title</label>
                             <input
                               type="text"
                               value={activeProduct.name}
                               onChange={(e) => handleUpdateProductInfo(activeProduct.id, 'name', e.target.value)}
-                              className="w-full bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1.5 text-xs text-slate-900 focus:border-emerald-500/30 focus:outline-none font-semibold"
+                              className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-emerald-500/30 focus:outline-none font-semibold"
                             />
                           </div>
 
                           <div className="space-y-1">
-                            <label className="block text-[9px] uppercase tracking-wider text-slate-400 font-bold">Category Group</label>
+                            <label className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Category Group</label>
                             <select
                               value={activeProduct.category}
                               onChange={(e) => handleUpdateProductInfo(activeProduct.id, 'category', e.target.value)}
-                              className="w-full bg-slate-50 border border-slate-200 rounded-md px-2 py-1.5 text-xs text-slate-900 focus:border-emerald-500/30 focus:outline-none"
+                              className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-emerald-500/30 focus:outline-none font-semibold"
                             >
                               {['Duvet Sets', 'Sheets', 'Toppers & Protection', 'Pillows', 'Blankets & Throws', 'Towels'].map(c => (
                                 <option key={c} value={c}>{c}</option>
@@ -1139,12 +1139,12 @@ alter table products disable row level security;`}
                           </div>
 
                           <div className="sm:col-span-2 space-y-1">
-                            <label className="block text-[9px] uppercase tracking-wider text-slate-400 font-bold">Catalogue Description</label>
+                            <label className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Catalogue Description</label>
                             <textarea
                               value={activeProduct.description}
                               rows={2}
                               onChange={(e) => handleUpdateProductInfo(activeProduct.id, 'description', e.target.value)}
-                              className="w-full bg-slate-50 border border-slate-200 rounded-md px-2.5 py-1.5 text-xs text-slate-900 focus:border-emerald-500/30 focus:outline-none"
+                              className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-emerald-500/30 focus:outline-none font-semibold"
                             />
                           </div>
                         </div>
@@ -1152,8 +1152,8 @@ alter table products disable row level security;`}
 
                       {/* CRUD SECTION 1: Color swatches association */}
                       <div className="space-y-2.5">
-                        <h5 className="text-[10px] font-bold uppercase tracking-widest text-emerald-800 flex items-center gap-1.5">
-                          <Palette className="w-3.5 h-3.5" /> Catalogue Swatches Toggle
+                        <h5 className="text-xs sm:text-sm font-bold uppercase tracking-widest text-emerald-800 flex items-center gap-1.5">
+                          <Palette className="w-4 h-4" /> Catalogue Swatches Toggle
                         </h5>
                         
                         <div className="flex flex-wrap gap-2 items-center">
@@ -1164,13 +1164,13 @@ alter table products disable row level security;`}
                               <button
                                 key={colName}
                                 onClick={() => handleToggleColor(activeProduct.id, colName)}
-                                className={`px-3 py-1.5 rounded-lg text-xs flex items-center gap-2 border transition-all ${
+                                className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm flex items-center gap-2 border transition-all ${
                                   isSelected 
-                                    ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-semibold' 
-                                    : 'bg-white border-slate-200 text-slate-400 hover:text-slate-700'
+                                    ? 'bg-emerald-50 border-emerald-300 text-emerald-800 font-bold' 
+                                    : 'bg-white border-slate-200 text-slate-400 hover:text-slate-700 font-semibold'
                                 }`}
                               >
-                                <span className="w-3 h-3 rounded-full border border-slate-200" style={{ backgroundColor: hexVal }} />
+                                <span className="w-3.5 h-3.5 rounded-full border border-slate-200" style={{ backgroundColor: hexVal }} />
                                 <span>{colName}</span>
                               </button>
                             );
@@ -1179,9 +1179,9 @@ alter table products disable row level security;`}
                           {/* Elegant Add Color Swatch Button */}
                           <button
                             onClick={() => setShowColorCreator(!showColorCreator)}
-                            className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all"
+                            className="px-3.5 py-1.5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 rounded-lg text-xs sm:text-sm font-bold flex items-center gap-1.5 transition-all"
                           >
-                            <Plus className="w-3.5 h-3.5" />
+                            <Plus className="w-4 h-4" />
                             <span>Add Color</span>
                           </button>
                         </div>
@@ -1235,8 +1235,8 @@ alter table products disable row level security;`}
 
                       {/* CRUD SECTION 2: Active Sizing Pricing Editor */}
                       <div className="space-y-3.5">
-                        <h5 className="text-[10px] font-bold uppercase tracking-widest text-emerald-800 flex items-center gap-1.5">
-                          <Package className="w-3.5 h-3.5" /> Pricing &amp; Stock Count Controls
+                        <h5 className="text-xs sm:text-sm font-bold uppercase tracking-widest text-emerald-800 flex items-center gap-1.5">
+                          <Package className="w-4 h-4" /> Pricing &amp; Stock Count Controls
                         </h5>
 
                         <div className="space-y-2">
@@ -1245,16 +1245,16 @@ alter table products disable row level security;`}
                             return (
                               <div 
                                 key={v.id}
-                                className="bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3 grid grid-cols-1 sm:grid-cols-12 gap-3 items-center hover:border-emerald-600/20 transition-colors"
+                                className="bg-slate-50/50 border border-slate-200 rounded-xl px-4 py-3.5 grid grid-cols-1 sm:grid-cols-12 gap-3 items-center hover:border-emerald-600/20 transition-colors"
                               >
                                 {/* Size Label */}
-                                <div className="sm:col-span-3 text-xs font-bold text-slate-800">
+                                <div className="sm:col-span-3 text-sm sm:text-base font-bold text-slate-800">
                                   {v.size}
                                 </div>
 
                                 {/* Price Field */}
                                 <div className="sm:col-span-4 flex items-center gap-2">
-                                  <span className="text-slate-400 text-xs font-mono">£</span>
+                                  <span className="text-slate-400 text-sm font-mono">£</span>
                                   <input 
                                     type="number"
                                     step="0.01"
@@ -1263,7 +1263,7 @@ alter table products disable row level security;`}
                                       const val = parseFloat(e.target.value) || 0;
                                       handleEditVariantValue(activeProduct.id, v.id, 'price', val);
                                     }}
-                                    className="w-full bg-white border border-slate-200 rounded px-2.5 py-1.5 text-xs text-slate-900 focus:border-emerald-500/30 focus:outline-none font-mono"
+                                    className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-emerald-500/30 focus:outline-none font-mono font-bold"
                                   />
                                 </div>
 
@@ -1276,13 +1276,13 @@ alter table products disable row level security;`}
                                       const val = parseInt(e.target.value, 10);
                                       handleEditVariantValue(activeProduct.id, v.id, 'stock', isNaN(val) ? 0 : val);
                                     }}
-                                    className="w-full bg-white border border-slate-200 rounded px-2.5 py-1.5 text-xs text-slate-900 focus:border-emerald-500/30 focus:outline-none text-center font-mono"
+                                    className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-emerald-500/30 focus:outline-none text-center font-mono font-semibold"
                                   />
                                   
                                   {isOutOfStock ? (
-                                    <span className="text-[8px] bg-red-50 text-red-700 border border-red-200 px-1 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0">Empty</span>
+                                    <span className="text-[10px] bg-red-50 text-red-700 border border-red-200 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0">Empty</span>
                                   ) : v.stock < 10 ? (
-                                    <span className="text-[8px] bg-amber-50 text-amber-700 border border-amber-200 px-1 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0">Low</span>
+                                    <span className="text-[10px] bg-amber-50 text-amber-700 border border-amber-200 px-1.5 py-0.5 rounded font-bold uppercase tracking-wider flex-shrink-0">Low</span>
                                   ) : null}
                                 </div>
 
@@ -1305,40 +1305,40 @@ alter table products disable row level security;`}
 
                       {/* CRUD SECTION 3: Create sizing options for this product */}
                       <form onSubmit={handleAddSizeVariant} className="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3 shadow-sm">
-                        <h6 className="text-[10px] font-bold text-slate-800 uppercase tracking-widest flex items-center gap-1.5">
-                          <ListPlus className="w-3.5 h-3.5 text-emerald-700" /> Create Sizing Variant Option
+                        <h6 className="text-xs sm:text-sm font-bold text-slate-800 uppercase tracking-widest flex items-center gap-1.5">
+                          <ListPlus className="w-4 h-4 text-emerald-700" /> Create Sizing Variant Option
                         </h6>
 
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                           <div className="space-y-1">
-                            <label className="block text-[8px] uppercase tracking-wider text-slate-400 font-bold">Size Identifier</label>
+                            <label className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Size Identifier</label>
                             <input 
                               type="text"
                               value={newSizeName}
                               onChange={(e) => setNewSizeName(e.target.value)}
                               placeholder="e.g. King, Single, Super King"
-                              className="w-full bg-white border border-slate-200 rounded px-2.5 py-1.5 text-xs text-slate-900 focus:border-emerald-500/30 focus:outline-none"
+                              className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-emerald-500/30 focus:outline-none font-semibold"
                             />
                           </div>
 
                           <div className="space-y-1">
-                            <label className="block text-[8px] uppercase tracking-wider text-slate-400 font-bold">Unit Wholesale Price (£)</label>
+                            <label className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Unit Wholesale Price (£)</label>
                             <input 
                               type="number"
                               step="0.10"
                               value={newSizePrice}
                               onChange={(e) => setNewSizePrice(parseFloat(e.target.value) || 0)}
-                              className="w-full bg-white border border-slate-200 rounded px-2.5 py-1.5 text-xs text-slate-900 focus:border-emerald-500/30 focus:outline-none font-mono"
+                              className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-emerald-500/30 focus:outline-none font-mono font-bold"
                             />
                           </div>
 
                           <div className="space-y-1">
-                            <label className="block text-[8px] uppercase tracking-wider text-slate-400 font-bold">Starting Stock Level</label>
+                            <label className="block text-xs uppercase tracking-wider text-slate-400 font-bold">Starting Stock Level</label>
                             <input 
                               type="number"
                               value={newSizeStock}
                               onChange={(e) => setNewSizeStock(parseInt(e.target.value, 10) || 0)}
-                              className="w-full bg-white border border-slate-200 rounded px-2.5 py-1.5 text-xs text-slate-900 focus:border-emerald-500/30 focus:outline-none font-mono"
+                              className="w-full bg-white border border-slate-200 rounded-lg px-3 py-2 text-sm text-slate-900 focus:border-emerald-500/30 focus:outline-none font-mono font-semibold"
                             />
                           </div>
                         </div>
