@@ -1,0 +1,6 @@
+{
+  "name": "De Bagh Linen Wholesale",
+  "description": "Sleek, modern wholesale bedding & towel catalogue for De Bagh Linen with a Dark Slate & Emerald Green accent design. Features product configurations, real-time pricing and stock editing.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
